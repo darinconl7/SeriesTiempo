@@ -28,3 +28,11 @@ La función  *getSymbols()* descarga los datos del índice S&P 500 desde la fuen
 ```{r}
 head(GSPC)
 ```
+
+A continuación, realizaremos una conversión de datos a zoo (Z's Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.
+
+```{r}
+#Seleccionamos unicamente el campo de los valores de cierre
+sp500_close <- GSPC[, "GSPC.Close"]
+plot(sp500_close)
+```

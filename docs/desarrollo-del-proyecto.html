@@ -176,6 +176,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2016-11-04   2083.79   2099.07  2083.79    2085.18  3841910000       2085.18
 ## 2016-11-07   2100.59   2132.00  2100.59    2131.52  3739720000       2131.52
 ## 2016-11-08   2129.92   2146.87  2123.56    2139.56  3921850000       2139.56</code></pre>
+<p>A continuación, realizaremos una conversión de datos a zoo (Z’s Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="co">#Seleccionamos unicamente el campo de los valores de cierre</span></span>
+<span id="cb4-2"><a href="desarrollo-del-proyecto.html#cb4-2" tabindex="-1"></a>sp500_close <span class="ot">&lt;-</span> GSPC[, <span class="st">&quot;GSPC.Close&quot;</span>]</span>
+<span id="cb4-3"><a href="desarrollo-del-proyecto.html#cb4-3" tabindex="-1"></a><span class="fu">plot</span>(sp500_close)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 
 </div>
             </section>
