@@ -1,6 +1,3 @@
-down-the-rabbit-hole
-the-pool-of-tears
-a-caucus-race-and-a-long-tale
-propuesta-proyecto-análisis-de-la-series-de-tiempo-sp500
 introducción
 resultados
+desarrollo-del-proyecto
