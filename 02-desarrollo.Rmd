@@ -1,2 +1,30 @@
 # Desarrollo del proyecto
 
+Para la obtención de los indices de S&P500 usaremos la biblioteca quantmod, esta es una herramienta en R que proporciona funciones para la descarga, manejo y análisis de datos financieros. No almacena ni proporciona datos financieros en sí misma, sino que se basa en diversas fuentes de datos para obtener información del mercado.
+
+```{r, echo=FALSE}
+suppressPackageStartupMessages({
+    library(zoo)
+    library(quantmod)
+})
+```
+
+```{r, echo=FALSE}
+options(zoo.note = FALSE)
+library(TTR)
+library(zoo)
+library(xts)
+library(quantmod)
+```
+
+```{r}
+
+# Cargamos los datos del S&P 500
+sp500_returns <- getSymbols("^GSPC", from = "2016-11-01", to = Sys.Date())
+
+```
+La función  *getSymbols()* descarga los datos del índice S&P 500 desde la fuente de datos especificada y los almacena en un objeto llamado "GSPC".
+
+```{r}
+head(GSPC)
+```
