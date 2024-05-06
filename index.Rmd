@@ -5,5 +5,10 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
-# Down the rabbit-hole
+# Introducción
 
+El análisis de series temporales es una herramienta fundamental en la evaluación de datos financieros, especialmente en el ámbito de inversión en mercados de valores. En este proyecto, nos centraremos en el análisis de la serie temporal del índice S&P 500, uno de los indicadores más importantes y seguidos en el mundo financiero.
+
+El S&P 500, desarrollado por Standard & Poor's, es un índice ponderado por capitalización de mercado que incluye a las 500 empresas más grandes de Estados Unidos. Este índice es ampliamente utilizado como referencia para el desempeño del mercado de valores estadounidense y como medida de la salud económica en general.
+
+El objetivo principal de este proyecto es analizar la serie temporal del S&P 500 para identificar tendencias, patrones estacionales, volatilidad y cualquier otra característica relevante que pueda proporcionar información útil para los inversores. Para lograr esto, emplearemos técnicas avanzadas de análisis de series temporales y utilizaremos herramientas estadísticas y de visualización de datos para explorar y comprender la dinámica subyacente del mercado.
