@@ -1,3 +1,7 @@
 introducción
 resultados
 desarrollo-del-proyecto
+imagen-serie-de-tiempo
+graficas-de-la-decomposición-de-los-datos
+ciclo-de-las-series-de-tiempo
+conversión-a-formato-de-serie-de-tiempo
