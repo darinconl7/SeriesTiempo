@@ -6,6 +6,7 @@ Para la obtención de los indices de S&P500 usaremos la biblioteca quantmod, est
 suppressPackageStartupMessages({
     library(zoo)
     library(quantmod)
+    library(tseries)  
 })
 ```
 
@@ -15,12 +16,13 @@ library(TTR)
 library(zoo)
 library(xts)
 library(quantmod)
+library(tseries)
 ```
 
 ```{r}
 
 # Cargamos los datos del S&P 500
-sp500_returns <- getSymbols("^GSPC", from = "2016-11-01", to = Sys.Date())
+sp500_returns <- getSymbols("^GSPC", from = "2010-01-01", to = Sys.Date())
 
 ```
 La función  *getSymbols()* descarga los datos del índice S&P 500 desde la fuente de datos especificada y los almacena en un objeto llamado "GSPC".
@@ -31,8 +33,41 @@ head(GSPC)
 
 A continuación, realizaremos una conversión de datos a zoo (Z's Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.
 
+#Conversión a Formato de Serie de Tiempo
+
 ```{r}
-#Seleccionamos unicamente el campo de los valores de cierre
-sp500_close <- GSPC[, "GSPC.Close"]
-plot(sp500_close)
+#Realizamos la agrupación por mes
+GSPC_month=to.monthly(GSPC)
+GSPC_month
+```
+
+#Imagen data agrupada por mes
+
+```{r}
+plot(GSPC_month$GSPC.Close)
+```
+A continuación, realizaremos el proceso de descomposición estacional a la serie temporal utilizando la función decompose(), la cual separa la serie temporal en tres componentes: tendencia, estacionalidad y residuos. Almacenaremos el resultado de esta operación en el objeto GSCP_month_decomp.
+
+```{r}
+# Descomposición de la data agrupada por mes
+suppressWarnings({
+  GSCP_month_decomp <- decompose(GSPC_month$GSPC.Close)
+})
+
+```
+
+```{r}
+# Establecemos el diseño de la ventana de gráficos en tres filas y una columna
+par(mfrow=c(2,1))
+
+plot(GSCP_month_decomp$trend, main = "Tendencia")
+
+plot(GSCP_month_decomp$seasonal, main = "Estacionalidad")
+
+#plot(GSCP_month_decomp$random, main = "Residuos")
+```
+En la grafico anterior podemos observar que la tendencia de los indices S&P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente.
+
+```{r}
+print(GSCP_month_decomp$random)
 ```
