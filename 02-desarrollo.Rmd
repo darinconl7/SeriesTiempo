@@ -12,6 +12,7 @@ suppressPackageStartupMessages({
 
 ```{r, echo=FALSE}
 options(zoo.note = FALSE)
+options(tseries.note = FALSE)
 library(TTR)
 library(zoo)
 library(xts)
@@ -27,47 +28,67 @@ sp500_returns <- getSymbols("^GSPC", from = "2010-01-01", to = Sys.Date())
 ```
 La función  *getSymbols()* descarga los datos del índice S&P 500 desde la fuente de datos especificada y los almacena en un objeto llamado "GSPC".
 
+En nuestra etapa exploratoria podemos observar que la fecha inicial es efectivamente enero del 2010 y la fecha final es la fecha actual.
+
 ```{r}
 head(GSPC)
 ```
 
+```{r}
+tail(GSPC)
+```
 A continuación, realizaremos una conversión de datos a zoo (Z's Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.
 
-#Conversión a Formato de Serie de Tiempo
+## Conversión a Formato de Serie de Tiempo
+
+Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma diaria sera 365.25.
 
 ```{r}
 #Realizamos la agrupación por mes
 GSPC_month=to.monthly(GSPC)
-GSPC_month
+head(GSPC_month)
 ```
 
-#Imagen data agrupada por mes
 
 ```{r}
-plot(GSPC_month$GSPC.Close)
+TS_GSPC= ts(GSPC_month$GSPC.Close, frequency = 12, start = c(2010,1))
+head(TS_GSPC)
+```
+
+## Imagen Serie de Tiempo
+
+```{r}
+plot(TS_GSPC)
 ```
 A continuación, realizaremos el proceso de descomposición estacional a la serie temporal utilizando la función decompose(), la cual separa la serie temporal en tres componentes: tendencia, estacionalidad y residuos. Almacenaremos el resultado de esta operación en el objeto GSCP_month_decomp.
 
 ```{r}
 # Descomposición de la data agrupada por mes
 suppressWarnings({
-  GSCP_month_decomp <- decompose(GSPC_month$GSPC.Close)
+  GSCP_month_decomp <- decompose(TS_GSPC)
 })
 
 ```
 
+## Graficas de la Decomposición de los Datos
+
 ```{r}
 # Establecemos el diseño de la ventana de gráficos en tres filas y una columna
-par(mfrow=c(2,1))
+par(mfrow=c(3,1))
 
 plot(GSCP_month_decomp$trend, main = "Tendencia")
 
 plot(GSCP_month_decomp$seasonal, main = "Estacionalidad")
 
-#plot(GSCP_month_decomp$random, main = "Residuos")
+plot(GSCP_month_decomp$random, main = "Residuos")
 ```
-En la grafico anterior podemos observar que la tendencia de los indices S&P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente.
+
+En el grafico anterior podemos observar que la tendencia de los indices S&P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente. Y un periodo muy remarcado de Residuos para la pandemia del covid del 2020.
+
+## Ciclo de las series de tiempo
+
+Cuando se realiza una descomposición de series temporales, los residuos son la parte de la serie temporal que no se puede explicar mediante la tendencia y la estacionalidad. Si hay ciclos en los datos, es probable que estos se reflejen en los residuos. Esto significa que los ciclos pueden manifestarse como patrones periódicos o fluctuaciones en los residuos después de que se hayan eliminado la tendencia y la estacionalidad. En  este caso, podemos observar que los ciclos no tienen grnades variaciones en el tiempo.
 
 ```{r}
-print(GSCP_month_decomp$random)
+boxplot(TS_GSPC~cycle(TS_GSPC))
 ```

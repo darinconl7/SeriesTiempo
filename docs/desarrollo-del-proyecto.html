@@ -141,7 +141,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>2</b> Desarrollo del proyecto</a></li>
+<li class="chapter" data-level="2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>2</b> Desarrollo del proyecto</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Conversión a Formato de Serie de Tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#imagen-serie-de-tiempo"><i class="fa fa-check"></i><b>2.2</b> Imagen Serie de Tiempo</a></li>
+<li class="chapter" data-level="2.3" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#graficas-de-la-decomposición-de-los-datos"><i class="fa fa-check"></i><b>2.3</b> Graficas de la Decomposición de los Datos</a></li>
+<li class="chapter" data-level="2.4" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#ciclo-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>2.4</b> Ciclo de las series de tiempo</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>3</b> Resultados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -168,6 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="desarrollo-del-proyecto.html#cb1-1" tabindex="-1"></a><span class="co"># Cargamos los datos del S&amp;P 500</span></span>
 <span id="cb1-2"><a href="desarrollo-del-proyecto.html#cb1-2" tabindex="-1"></a>sp500_returns <span class="ot">&lt;-</span> <span class="fu">getSymbols</span>(<span class="st">&quot;^GSPC&quot;</span>, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="fu">Sys.Date</span>())</span></code></pre></div>
 <p>La función <em>getSymbols()</em> descarga los datos del índice S&amp;P 500 desde la fuente de datos especificada y los almacena en un objeto llamado “GSPC”.</p>
+<p>En nuestra etapa exploratoria podemos observar que la fecha inicial es efectivamente enero del 2010 y la fecha final es la fecha actual.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="desarrollo-del-proyecto.html#cb2-1" tabindex="-1"></a><span class="fu">head</span>(GSPC)</span></code></pre></div>
 <pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close GSPC.Volume GSPC.Adjusted
 ## 2010-01-04   1116.56   1133.87  1116.56    1132.99  3991400000       1132.99
@@ -176,53 +183,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2010-01-07   1136.27   1142.46  1131.32    1141.69  5270680000       1141.69
 ## 2010-01-08   1140.52   1145.39  1136.22    1144.98  4389590000       1144.98
 ## 2010-01-11   1145.96   1149.74  1142.02    1146.98  4255780000       1146.98</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="fu">tail</span>(GSPC)</span></code></pre></div>
+<pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close GSPC.Volume GSPC.Adjusted
+## 2024-04-26   5084.65   5114.62  5073.14    5099.96  3604140000       5099.96
+## 2024-04-29   5114.13   5123.49  5088.65    5116.17  3447450000       5116.17
+## 2024-04-30   5103.78   5110.83  5035.31    5035.69  4082470000       5035.69
+## 2024-05-01   5029.03   5096.12  5013.45    5018.39  4544170000       5018.39
+## 2024-05-02   5049.32   5073.21  5011.05    5064.20  4381660000       5064.20
+## 2024-05-03   5122.78   5139.12  5101.22    5127.79  3924990000       5127.79</code></pre>
 <p>A continuación, realizaremos una conversión de datos a zoo (Z’s Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.</p>
-<p>#Conversión a Formato de Serie de Tiempo</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="co">#Realizamos la agrupación por mes</span></span>
-<span id="cb4-2"><a href="desarrollo-del-proyecto.html#cb4-2" tabindex="-1"></a>GSPC_month<span class="ot">=</span><span class="fu">to.monthly</span>(GSPC)</span>
-<span id="cb4-3"><a href="desarrollo-del-proyecto.html#cb4-3" tabindex="-1"></a>GSPC_month</span></code></pre></div>
-<pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close  GSPC.Volume GSPC.Adjusted
-##  ene. 2010   1116.56   1150.45  1071.59    1073.87  90947580000       1073.87
-##  feb. 2010   1073.89   1112.42  1044.50    1104.49  84561340000       1104.49
-##  mar. 2010   1105.36   1180.69  1105.36    1169.43 103683550000       1169.43
-##  abr. 2010   1171.23   1219.80  1170.69    1186.69 116741910000       1186.69
-##  may. 2010   1188.58   1205.13  1040.78    1089.41 127662780000       1089.41
-##  jun. 2010   1087.30   1131.23  1028.33    1030.71 110106750000       1030.71
-##  jul. 2010   1031.10   1120.95  1010.91    1101.60  94778110000       1101.60
-##  ago. 2010   1107.53   1129.24  1039.70    1049.33  85738250000       1049.33
-## sept. 2010   1049.72   1157.16  1049.72    1141.20  79589450000       1141.20
-##  oct. 2010   1143.49   1196.14  1131.87    1183.26  89536270000       1183.26
-##        ...                                                                   
-##  ago. 2023   4578.83   4584.62  4335.31    4507.66  86840820000       4507.66
-## sept. 2023   4530.60   4541.25  4238.63    4288.05  73482980000       4288.05
-##  oct. 2023   4284.52   4393.57  4103.78    4193.80  83519460000       4193.80
-##  nov. 2023   4201.27   4587.64  4197.74    4567.80  80970570000       4567.80
-##  dic. 2023   4559.43   4793.30  4546.50    4769.83  81530670000       4769.83
-##  ene. 2024   4745.20   4931.09  4682.11    4845.65  81737880000       4845.65
-##  feb. 2024   4861.11   5111.06  4853.52    5096.27  82066930000       5096.27
-##  mar. 2024   5098.51   5264.85  5056.82    5254.35  86299510000       5254.35
-##  abr. 2024   5257.97   5263.95  4953.56    5035.69  81747170000       5035.69
-##  may. 2024   5029.03   5139.12  5011.05    5127.79  12850820000       5127.79</code></pre>
-<p>#Imagen data agrupada por mes</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="desarrollo-del-proyecto.html#cb6-1" tabindex="-1"></a><span class="fu">plot</span>(GSPC_month<span class="sc">$</span>GSPC.Close)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<div id="conversión-a-formato-de-serie-de-tiempo" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Conversión a Formato de Serie de Tiempo<a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma diaria sera 365.25.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="desarrollo-del-proyecto.html#cb6-1" tabindex="-1"></a><span class="co">#Realizamos la agrupación por mes</span></span>
+<span id="cb6-2"><a href="desarrollo-del-proyecto.html#cb6-2" tabindex="-1"></a>GSPC_month<span class="ot">=</span><span class="fu">to.monthly</span>(GSPC)</span>
+<span id="cb6-3"><a href="desarrollo-del-proyecto.html#cb6-3" tabindex="-1"></a><span class="fu">head</span>(GSPC_month)</span></code></pre></div>
+<pre><code>##           GSPC.Open GSPC.High GSPC.Low GSPC.Close  GSPC.Volume GSPC.Adjusted
+## ene. 2010   1116.56   1150.45  1071.59    1073.87  90947580000       1073.87
+## feb. 2010   1073.89   1112.42  1044.50    1104.49  84561340000       1104.49
+## mar. 2010   1105.36   1180.69  1105.36    1169.43 103683550000       1169.43
+## abr. 2010   1171.23   1219.80  1170.69    1186.69 116741910000       1186.69
+## may. 2010   1188.58   1205.13  1040.78    1089.41 127662780000       1089.41
+## jun. 2010   1087.30   1131.23  1028.33    1030.71 110106750000       1030.71</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="desarrollo-del-proyecto.html#cb8-1" tabindex="-1"></a>TS_GSPC<span class="ot">=</span> <span class="fu">ts</span>(GSPC_month<span class="sc">$</span>GSPC.Close, <span class="at">frequency =</span> <span class="dv">12</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2010</span>,<span class="dv">1</span>))</span>
+<span id="cb8-2"><a href="desarrollo-del-proyecto.html#cb8-2" tabindex="-1"></a><span class="fu">head</span>(TS_GSPC)</span></code></pre></div>
+<pre><code>##      GSPC.Close
+## [1,]    1073.87
+## [2,]    1104.49
+## [3,]    1169.43
+## [4,]    1186.69
+## [5,]    1089.41
+## [6,]    1030.71</code></pre>
+</div>
+<div id="imagen-serie-de-tiempo" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Imagen Serie de Tiempo<a href="desarrollo-del-proyecto.html#imagen-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="desarrollo-del-proyecto.html#cb10-1" tabindex="-1"></a><span class="fu">plot</span>(TS_GSPC)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 A continuación, realizaremos el proceso de descomposición estacional a la serie temporal utilizando la función decompose(), la cual separa la serie temporal en tres componentes: tendencia, estacionalidad y residuos. Almacenaremos el resultado de esta operación en el objeto GSCP_month_decomp.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="desarrollo-del-proyecto.html#cb7-1" tabindex="-1"></a><span class="co"># Descomposición de la data agrupada por mes</span></span>
-<span id="cb7-2"><a href="desarrollo-del-proyecto.html#cb7-2" tabindex="-1"></a><span class="fu">suppressWarnings</span>({</span>
-<span id="cb7-3"><a href="desarrollo-del-proyecto.html#cb7-3" tabindex="-1"></a>  GSCP_month_decomp <span class="ot">&lt;-</span> <span class="fu">decompose</span>(GSPC_month<span class="sc">$</span>GSPC.Close)</span>
-<span id="cb7-4"><a href="desarrollo-del-proyecto.html#cb7-4" tabindex="-1"></a>})</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="desarrollo-del-proyecto.html#cb8-1" tabindex="-1"></a><span class="co"># Establecemos el diseño de la ventana de gráficos en tres filas y una columna</span></span>
-<span id="cb8-2"><a href="desarrollo-del-proyecto.html#cb8-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
-<span id="cb8-3"><a href="desarrollo-del-proyecto.html#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="desarrollo-del-proyecto.html#cb8-4" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>trend, <span class="at">main =</span> <span class="st">&quot;Tendencia&quot;</span>)</span>
-<span id="cb8-5"><a href="desarrollo-del-proyecto.html#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="desarrollo-del-proyecto.html#cb8-6" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>seasonal, <span class="at">main =</span> <span class="st">&quot;Estacionalidad&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="desarrollo-del-proyecto.html#cb9-1" tabindex="-1"></a><span class="co">#plot(GSCP_month_decomp$random, main = &quot;Residuos&quot;)</span></span></code></pre></div>
-<p>En la grafico anterior podemos observar que la tendencia de los indices S&amp;P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="desarrollo-del-proyecto.html#cb10-1" tabindex="-1"></a><span class="fu">print</span>(GSCP_month_decomp<span class="sc">$</span>random)</span></code></pre></div>
-<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="desarrollo-del-proyecto.html#cb11-1" tabindex="-1"></a><span class="co"># Descomposición de la data agrupada por mes</span></span>
+<span id="cb11-2"><a href="desarrollo-del-proyecto.html#cb11-2" tabindex="-1"></a><span class="fu">suppressWarnings</span>({</span>
+<span id="cb11-3"><a href="desarrollo-del-proyecto.html#cb11-3" tabindex="-1"></a>  GSCP_month_decomp <span class="ot">&lt;-</span> <span class="fu">decompose</span>(TS_GSPC)</span>
+<span id="cb11-4"><a href="desarrollo-del-proyecto.html#cb11-4" tabindex="-1"></a>})</span></code></pre></div>
+</div>
+<div id="graficas-de-la-decomposición-de-los-datos" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Graficas de la Decomposición de los Datos<a href="desarrollo-del-proyecto.html#graficas-de-la-decomposición-de-los-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="desarrollo-del-proyecto.html#cb12-1" tabindex="-1"></a><span class="co"># Establecemos el diseño de la ventana de gráficos en tres filas y una columna</span></span>
+<span id="cb12-2"><a href="desarrollo-del-proyecto.html#cb12-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb12-3"><a href="desarrollo-del-proyecto.html#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="desarrollo-del-proyecto.html#cb12-4" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>trend, <span class="at">main =</span> <span class="st">&quot;Tendencia&quot;</span>)</span>
+<span id="cb12-5"><a href="desarrollo-del-proyecto.html#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="desarrollo-del-proyecto.html#cb12-6" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>seasonal, <span class="at">main =</span> <span class="st">&quot;Estacionalidad&quot;</span>)</span>
+<span id="cb12-7"><a href="desarrollo-del-proyecto.html#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="desarrollo-del-proyecto.html#cb12-8" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>random, <span class="at">main =</span> <span class="st">&quot;Residuos&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>En el grafico anterior podemos observar que la tendencia de los indices S&amp;P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente. Y un periodo muy remarcado de Residuos para la pandemia del covid del 2020.</p>
+</div>
+<div id="ciclo-de-las-series-de-tiempo" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Ciclo de las series de tiempo<a href="desarrollo-del-proyecto.html#ciclo-de-las-series-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Cuando se realiza una descomposición de series temporales, los residuos son la parte de la serie temporal que no se puede explicar mediante la tendencia y la estacionalidad. Si hay ciclos en los datos, es probable que estos se reflejen en los residuos. Esto significa que los ciclos pueden manifestarse como patrones periódicos o fluctuaciones en los residuos después de que se hayan eliminado la tendencia y la estacionalidad. En este caso, podemos observar que los ciclos no tienen grnades variaciones en el tiempo.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="desarrollo-del-proyecto.html#cb13-1" tabindex="-1"></a><span class="fu">boxplot</span>(TS_GSPC<span class="sc">~</span><span class="fu">cycle</span>(TS_GSPC))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 
+</div>
 </div>
             </section>
 
