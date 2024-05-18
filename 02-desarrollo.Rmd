@@ -41,7 +41,7 @@ A continuación, realizaremos una conversión de datos a zoo (Z's Ordered Observ
 
 ## Conversión a Formato de Serie de Tiempo
 
-Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma diaria sera 365.25.
+Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma mensual sera de 12.
 
 ```{r}
 #Realizamos la agrupación por mes
