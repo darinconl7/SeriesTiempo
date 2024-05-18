@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel Alberto Rincón Loaiza" />
 
 
-<meta name="date" content="2024-05-06" />
+<meta name="date" content="2024-05-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -185,16 +185,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2010-01-11   1145.96   1149.74  1142.02    1146.98  4255780000       1146.98</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="fu">tail</span>(GSPC)</span></code></pre></div>
 <pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close GSPC.Volume GSPC.Adjusted
-## 2024-04-26   5084.65   5114.62  5073.14    5099.96  3604140000       5099.96
 ## 2024-04-29   5114.13   5123.49  5088.65    5116.17  3447450000       5116.17
 ## 2024-04-30   5103.78   5110.83  5035.31    5035.69  4082470000       5035.69
 ## 2024-05-01   5029.03   5096.12  5013.45    5018.39  4544170000       5018.39
 ## 2024-05-02   5049.32   5073.21  5011.05    5064.20  4381660000       5064.20
-## 2024-05-03   5122.78   5139.12  5101.22    5127.79  3924990000       5127.79</code></pre>
+## 2024-05-03   5122.78   5139.12  5101.22    5127.79  3924990000       5127.79
+## 2024-05-06   5142.42   5181.00  5142.42    5180.74  3683250000       5180.74</code></pre>
 <p>A continuación, realizaremos una conversión de datos a zoo (Z’s Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.</p>
 <div id="conversión-a-formato-de-serie-de-tiempo" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Conversión a Formato de Serie de Tiempo<a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma diaria sera 365.25.</p>
+<p>Para realizar la respectica serie de tiempo, haremos uso de la función ts, donde la frecuencia al ser data que llega de forma mensual sera de 12.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="desarrollo-del-proyecto.html#cb6-1" tabindex="-1"></a><span class="co">#Realizamos la agrupación por mes</span></span>
 <span id="cb6-2"><a href="desarrollo-del-proyecto.html#cb6-2" tabindex="-1"></a>GSPC_month<span class="ot">=</span><span class="fu">to.monthly</span>(GSPC)</span>
 <span id="cb6-3"><a href="desarrollo-del-proyecto.html#cb6-3" tabindex="-1"></a><span class="fu">head</span>(GSPC_month)</span></code></pre></div>
