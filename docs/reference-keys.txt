@@ -5,3 +5,13 @@ imagen-serie-de-tiempo
 graficas-de-la-decomposición-de-los-datos
 ciclo-de-las-series-de-tiempo
 conversión-a-formato-de-serie-de-tiempo
+modelo-arima
+preprocesamiento
+desarrollo-del-modelo-arima
+determinación-de-estacionaridad
+prueba-de-dickey-fuller-aumentada-adf
+diferenciación-de-la-serie
+modelo-arimaautoregressive-integrated-moving-average
+ajuste-del-modelo
+diagnostico-de-modelo
+predicciones-del-modelo

@@ -92,3 +92,93 @@ Cuando se realiza una descomposición de series temporales, los residuos son la 
 ```{r}
 boxplot(TS_GSPC~cycle(TS_GSPC))
 ```
+
+# Modelo ARIMA(AutoRegressive Integrated Moving Average) 
+
+Para el respectivo desarrollo de nuestro modelo ARIMA es necesaria la instalación de dos librerias:
+
+```{r}
+if(!require(forecast)) install.packages("forecast")
+if(!require(tseries)) install.packages("tseries")
+
+library(forecast)
+library(tseries)
+```
+
+## Determinación de Estacionaridad 
+
+Una serie temporal es estacionaria si sus propiedades estadísticas, como la media y la varianza, son constantes a lo largo del tiempo. En otras palabras, los datos no deben mostrar tendencias (crecientes o decrecientes) ni cambios en la varianza. Esta prueba es importante para el correcto desarrollo del modelo ARIMA, ya que este modelo requiere que los datos sean estacionarios para funcionar correctamente. Si la serie temporal no es estacionaria, los resultados del modelo pueden ser incorrectos o poco fiables.
+
+### Prueba de Dickey-Fuller Aumentada (ADF)
+
+La prueba de Dickey-Fuller aumentada (ADF) es una prueba estadística utilizada para determinar si una serie temporal es estacionaria. Esta prueba tiene la hipótesis nula de que la serie temporal tiene una raíz unitaria, lo que implica no estacionariedad.
+
+* Si el valor p es menor que un nivel de significancia (por ejemplo, 0.05): Rechazas la hipótesis nula y concluyes que la serie es estacionaria.
+
+* Si el valor p es mayor que el nivel de significancia: No puedes rechazar la hipótesis nula y concluyes que la serie no es estacionaria.
+
+```{r}
+adf_result <- adf.test(TS_GSPC)
+
+print(adf_result)
+```
+Dado que el valor p es 0.5887, que es mucho mayor que 0.05, no podemos rechazar la hipótesis nula. Esto significa que, según los resultados de esta prueba, no hay suficiente evidencia para concluir que la serie temporal TS_GSPC es estacionaria. 
+
+## Diferenciación de la Serie
+
+La diferenciación es una técnica que se utiliza en el análisis de series temporales para hacer que los datos sean más estables y uniformes. Este proceso ayuda a eliminar las tendencias y estabilizar la variabilidad en los datos a lo largo del tiempo. Funciona restando para cada punto en la serie temporal la diferencia entre el valor actual y el valor anterior, esto elimina tendencias crecientes o decrecientes en los datos, haciendo que la serie sea más estable y ayuda a hacer que la variabilidad en los datos sea más constante, lo que facilita el análisis y modelado.
+
+Para nuestro caso realizamos la diferenciación sobre el conjunto de datos de los precios de cierre con una frecuencia mensual que ya habiamos obtenido anteriormente *TS_GSPC*.
+
+```{r}
+diff_data_sp500 <- diff(TS_GSPC)
+```
+
+Ahora, con la nueva serie temporal diferenciada realizaremos la prueba de Dickey-Fuller Aumentada (ADF) de nuevo para verificar que sea estacionaria.
+
+```{r}
+adf_result_diff <- adf.test(diff_data_sp500)
+
+print(adf_result_diff)
+
+```
+Dado que el valor p es 0.01, podemos rechazar la hipótesis nula. Esto significa que hay suficiente evidencia para concluir que la serie temporal con frecuencia mensual diferenciada diff_data_sp500 es estacionaria.
+
+La advertencia de que el p-value es menor al valor impreso indica que el verdadero p-value es muy pequeño, incluso menor a 0.01, lo cual refuerza aún más la conclusión de que la serie es estacionaria.
+
+# Desarrollo del modelo ARIMA
+
+
+## Ajuste del Modelo
+
+Ahora a partir de nuestro dataset *diff_data_sp500*, vamos a proceder a ajustar el modelo ARIMA.
+
+```{r}
+model <- auto.arima(diff_data_sp500)
+
+summary(model)
+```
+
+## Diagnostico de Modelo
+
+En este paso vamos a revisar los residuos del modelo para asegurarnos que se comportan como un ruido blanco. Con la prueba de Ljung-Box, esta una prueba estadística utilizada para verificar la independencia de los residuos en un modelo de serie temporal. En otras palabras, evalúa si los residuos (diferencias entre los valores observados y los valores predichos) están correlacionados o no.
+
+```{r}
+checkresiduals(model)
+```
+
+Dado que el valor p es 0.004381, que es menor que 0.05, podemos rechazar la hipótesis nula. Esto significa que hay suficiente evidencia para concluir que los residuos del modelo ARIMA(0,0,1) no son independientes, es decir, hay autocorrelación significativa en los residuos.
+
+Esto sugiere que el modelo ARIMA(0,0,1) no ha capturado toda la estructura de la serie temporal y que podría ser necesario ajustar un modelo más complejo o revisar los parámetros del modelo.
+
+## Predicciones del Modelo
+
+A continuación, vamos a realizar una predicción de los proximos 12 meses de nuestro modelo para analizar los resultados.
+
+```{r}
+# Pronosticar los próximos 12 periodos
+forecasted <- forecast(model, h=12)
+
+plot(forecasted)
+```
+En la grafica podemos ver las predicciones para los próximos 12 periodos, la cual se extiende desde el final de la serie temporal original. Las bandas sombreadas alrededor de la línea de predicciones indican los intervalos de confianza, con las bandas más estrechas representando mayor certeza y las bandas más anchas representando mayor incertidumbre.

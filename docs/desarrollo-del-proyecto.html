@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel Alberto Rincón Loaiza" />
 
 
-<meta name="date" content="2024-05-07" />
+<meta name="date" content="2024-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="resultados.html"/>
+<link rel="next" href="modelo-arimaautoregressive-integrated-moving-average.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -148,7 +148,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#graficas-de-la-decomposición-de-los-datos"><i class="fa fa-check"></i><b>2.3</b> Graficas de la Decomposición de los Datos</a></li>
 <li class="chapter" data-level="2.4" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#ciclo-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>2.4</b> Ciclo de las series de tiempo</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>3</b> Resultados</a></li>
+<li class="chapter" data-level="3" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html"><i class="fa fa-check"></i><b>3</b> Modelo ARIMA(AutoRegressive Integrated Moving Average)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#determinación-de-estacionaridad"><i class="fa fa-check"></i><b>3.1</b> Determinación de Estacionaridad</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#prueba-de-dickey-fuller-aumentada-adf"><i class="fa fa-check"></i><b>3.1.1</b> Prueba de Dickey-Fuller Aumentada (ADF)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#diferenciación-de-la-serie"><i class="fa fa-check"></i><b>3.2</b> Diferenciación de la Serie</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html"><i class="fa fa-check"></i><b>4</b> Desarrollo del modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>4.1</b> Ajuste del Modelo</a></li>
+<li class="chapter" data-level="4.2" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#diagnostico-de-modelo"><i class="fa fa-check"></i><b>4.2</b> Diagnostico de Modelo</a></li>
+<li class="chapter" data-level="4.3" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#predicciones-del-modelo"><i class="fa fa-check"></i><b>4.3</b> Predicciones del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>5</b> Resultados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -185,12 +199,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2010-01-11   1145.96   1149.74  1142.02    1146.98  4255780000       1146.98</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="fu">tail</span>(GSPC)</span></code></pre></div>
 <pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close GSPC.Volume GSPC.Adjusted
-## 2024-04-29   5114.13   5123.49  5088.65    5116.17  3447450000       5116.17
-## 2024-04-30   5103.78   5110.83  5035.31    5035.69  4082470000       5035.69
-## 2024-05-01   5029.03   5096.12  5013.45    5018.39  4544170000       5018.39
-## 2024-05-02   5049.32   5073.21  5011.05    5064.20  4381660000       5064.20
-## 2024-05-03   5122.78   5139.12  5101.22    5127.79  3924990000       5127.79
-## 2024-05-06   5142.42   5181.00  5142.42    5180.74  3683250000       5180.74</code></pre>
+## 2024-05-10   5225.49   5239.66  5209.68    5222.68  3617900000       5222.68
+## 2024-05-13   5233.08   5237.26  5211.16    5221.42  4255710000       5221.42
+## 2024-05-14   5221.10   5250.37  5217.98    5246.68  4763580000       5246.68
+## 2024-05-15   5263.26   5311.76  5263.26    5308.15  4360810000       5308.15
+## 2024-05-16   5310.07   5325.49  5296.19    5297.10  3817470000       5297.10
+## 2024-05-17   5303.10   5305.45  5283.59    5303.27  3578120000       5303.27</code></pre>
 <p>A continuación, realizaremos una conversión de datos a zoo (Z’s Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.</p>
 <div id="conversión-a-formato-de-serie-de-tiempo" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Conversión a Formato de Serie de Tiempo<a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -243,7 +257,6 @@ A continuación, realizaremos el proceso de descomposición estacional a la seri
 <p>Cuando se realiza una descomposición de series temporales, los residuos son la parte de la serie temporal que no se puede explicar mediante la tendencia y la estacionalidad. Si hay ciclos en los datos, es probable que estos se reflejen en los residuos. Esto significa que los ciclos pueden manifestarse como patrones periódicos o fluctuaciones en los residuos después de que se hayan eliminado la tendencia y la estacionalidad. En este caso, podemos observar que los ciclos no tienen grnades variaciones en el tiempo.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="desarrollo-del-proyecto.html#cb13-1" tabindex="-1"></a><span class="fu">boxplot</span>(TS_GSPC<span class="sc">~</span><span class="fu">cycle</span>(TS_GSPC))</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-
 </div>
 </div>
             </section>
@@ -252,7 +265,7 @@ A continuación, realizaremos el proceso de descomposición estacional a la seri
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="resultados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modelo-arimaautoregressive-integrated-moving-average.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
