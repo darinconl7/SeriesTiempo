@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 4 Resultados | Series De Tiempo S&amp;P500</title>
-  <meta name="description" content="Capítulo 4 Resultados | Series De Tiempo S&amp;P500" />
+  <title>Capítulo 3 Resultados | Series De Tiempo S&amp;P500</title>
+  <meta name="description" content="Capítulo 5 Resultados | Series De Tiempo S&amp;P500" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 4 Resultados | Series De Tiempo S&amp;P500" />
+  <meta property="og:title" content="Capítulo 5 Resultados | Series De Tiempo S&amp;P500" />
   <meta property="og:type" content="book" />
 
 
 
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 4 Resultados | Series De Tiempo S&amp;P500" />
+  <meta name="twitter:title" content="Capítulo 5 Resultados | Series De Tiempo S&amp;P500" />
 
 
 
@@ -23,14 +23,14 @@
 <meta name="author" content="Daniel Alberto Rincón Loaiza" />
 
 
-<meta name="date" content="2024-05-18" />
+<meta name="date" content="2024-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 
-<link rel="prev" href="modelo-arima.html"/>
+<link rel="prev" href="desarrollo-del-proyecto.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -78,8 +78,9 @@
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
 <li class="chapter" data-level="2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>2</b> Desarrollo del proyecto</a>
-</li>
-<li class="chapter" data-level="3" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>3</b> Resultados</a></li>
+<li class="chapter" data-level="3" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>3</b> Preprocesamiento</a>
+<li class="chapter" data-level="4" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>4</b> Desarrollo Modelo ARIMA</a>
+<li class="chapter" data-level="5" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>5</b> Resultados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -99,8 +100,10 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="resultados" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Capítulo 4</span> Resultados<a href="resultados.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="resultados" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Capítulo 3</span> Resultados<a href="resultados.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>La base de datos desarrollada en este proyecto S&amp;P500 es un indice ponderado por capitalización del mercado que incluye a las 500 empresas mas grandes de Estados Unidos. Para nuestro ejercicio se realizo la agrupación de la base de datos con una frecuencia mensual, esta fue posteriormente diferenciada para eliminar las tendencias y estabilizar la variabilidad en los datos a lo largo del tiempo. La cual resulto ser una serie de tiempo estacionaria, esto se determino al aplicarle la prueba de Dickey-Fuller Aumentada (ADF).</p>
+<p>El diagnostico del modelo de nuestra base de datos de S&amp;P500 con una agrupación mensual y posteriormente diferenciada, nos arrojo un modelo ARIMA(0,0,1) with non-zero mean. Para este modelo obtuvimos valores muy altos de MPE y MAPE (-172.2868 y 408.0721, respectivamente) lo que indica que hay algunos errores grandes en términos relativos, lo que puede deberse a valores pequeños en la serie diferenciada sugiriendo que el modelo puede no ser muy preciso en términos relativos. Para ello podriamos considerar probar otros modelos ARIMA con diferentes órdenes (p, d, q) para ver si pueden mejorar el ajuste.</p>
 
 </div>
             </section>
@@ -108,7 +111,7 @@
           </div>
         </div>
       </div>
-<a href="modelo-arima.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="desarrollo-del-proyecto.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
