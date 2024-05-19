@@ -1,1 +1,5 @@
 # Resultados
+
+La base de datos desarrollada en este proyecto S&P500 es un indice ponderado por capitalización del mercado que incluye a las 500 empresas mas grandes de Estados Unidos. Para nuestro ejercicio se realizo la agrupación de la base de datos con una frecuencia mensual, esta fue posteriormente diferenciada para eliminar las tendencias y estabilizar la variabilidad en los datos a lo largo del tiempo. La cual resulto ser una serie de tiempo estacionaria, esto se determino al aplicarle la prueba de Dickey-Fuller Aumentada (ADF).
+
+El diagnostico del modelo de nuestra base de datos de S&P500 con una agrupación mensual y posteriormente diferenciada, nos arrojo un modelo ARIMA(0,0,1) with non-zero mean. Para este modelo obtuvimos valores muy altos de MPE y MAPE (-172.2868 y 408.0721, respectivamente) lo que indica que hay algunos errores grandes en términos relativos, lo que puede deberse a valores pequeños en la serie diferenciada sugiriendo que el modelo puede no ser muy preciso en términos relativos. Para ello podriamos considerar probar otros modelos ARIMA con diferentes órdenes (p, d, q) para ver si pueden mejorar el ajuste. 
