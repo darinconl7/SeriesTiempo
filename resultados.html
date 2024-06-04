@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 5 Resultados | 02-desarrollo.knit</title>
+  <title>Capítulo 6 Resultados | 02-desarrollo.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 5 Resultados | 02-desarrollo.knit" />
+  <meta property="og:title" content="Capítulo 6 Resultados | 02-desarrollo.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 5 Resultados | 02-desarrollo.knit" />
+  <meta name="twitter:title" content="Capítulo 6 Resultados | 02-desarrollo.knit" />
   
   
   
@@ -28,7 +28,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="desarrollo-del-modelo-arima.html"/>
+<link rel="prev" href="desarrollo-del-modelo-holt-winter.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -160,7 +160,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#diagnostico-de-modelo"><i class="fa fa-check"></i><b>4.2</b> Diagnostico de Modelo</a></li>
 <li class="chapter" data-level="4.3" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#predicciones-del-modelo"><i class="fa fa-check"></i><b>4.3</b> Predicciones del Modelo</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>5</b> Resultados</a></li>
+<li class="chapter" data-level="5" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html"><i class="fa fa-check"></i><b>5</b> Desarrollo del modelo Holt Winter</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#pronostico-del-modelo-holt-winter"><i class="fa fa-check"></i><b>5.1</b> Pronostico del Modelo Holt WInter</a></li>
+<li class="chapter" data-level="5.2" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#suavizamiento-exponencial-simple-simple-exponential-smoothing"><i class="fa fa-check"></i><b>5.2</b> Suavizamiento Exponencial Simple (Simple Exponential Smoothing)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>6</b> Resultados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -180,8 +185,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="resultados" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Capítulo 5</span> Resultados<a href="resultados.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="resultados" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> Resultados<a href="resultados.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>La base de datos desarrollada en este proyecto S&amp;P500 es un indice ponderado por capitalización del mercado que incluye a las 500 empresas mas grandes de Estados Unidos. Para nuestro ejercicio se realizo la agrupación de la base de datos con una frecuencia mensual, esta fue posteriormente diferenciada para eliminar las tendencias y estabilizar la variabilidad en los datos a lo largo del tiempo. La cual resulto ser una serie de tiempo estacionaria, esto se determino al aplicarle la prueba de Dickey-Fuller Aumentada (ADF).</p>
 <p>El diagnostico del modelo de nuestra base de datos de S&amp;P500 con una agrupación mensual y posteriormente diferenciada, nos arrojo un modelo ARIMA(0,0,1) with non-zero mean. Para este modelo obtuvimos valores muy altos de MPE y MAPE (-172.2868 y 408.0721, respectivamente) lo que indica que hay algunos errores grandes en términos relativos, lo que puede deberse a valores pequeños en la serie diferenciada sugiriendo que el modelo puede no ser muy preciso en términos relativos. Para ello podriamos considerar probar otros modelos ARIMA con diferentes órdenes (p, d, q) para ver si pueden mejorar el ajuste.</p>
 </div>
@@ -190,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="desarrollo-del-modelo-arima.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="desarrollo-del-modelo-holt-winter.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

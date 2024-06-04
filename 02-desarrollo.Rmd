@@ -191,6 +191,79 @@ plot(forecasted)
 ```
 En la grafica podemos ver las predicciones para los próximos 12 periodos, la cual se extiende desde el final de la serie temporal original. Las bandas sombreadas alrededor de la línea de predicciones indican los intervalos de confianza, con las bandas más estrechas representando mayor certeza y las bandas más anchas representando mayor incertidumbre.
 
+# Desarrollo del modelo Holt Winter
+
+El modelo Holt-Winters es una técnica de suavizamiento exponencial utilizada para realizar pronósticos en series temporales. Este modelo es especialmente útil cuando se espera que los datos tengan patrones estacionales. El modelo Holt-Winters se divide en dos variantes principales: la aditiva y la multiplicativa, dependiendo de la naturaleza de la estacionalidad (constante o proporcional al nivel de la serie).
+
+Para ajustar el modelo a nuestros datos, podemos elegir entre la variante aditiva y la multiplicativa especificando los parámetros seasonal a la serie temporal obtenida anteriormente.
+
+```{r}
+modelo_hw_GSPC <- HoltWinters(TS_GSPC, seasonal = "additive")
+
+# Ver el resumen del modelo Holt-Winters
+summary(modelo_hw_GSPC)
+```
+A continuación, vamos a realizar el pronostico de nuestro modelo de Holt Winter para el mismo periodo de tiempo de 12 meses que utilizamos para el modelo ARIMA.
+
+## Pronostico del Modelo Holt WInter
+
+```{r}
+if (!require(forecast)) {
+  install.packages("forecast")
+  library(forecast)
+}
+
+# Realizamos el pronóstico
+pronostico <- forecast(modelo_hw_GSPC, h = 12)
+print(pronostico)
+
+# Graficar los resultados
+plot(pronostico)
+```
+## Diagnostico del Modelo
+
+De igual forma que lo hicimos con el modelo ARIMA, con la prueba de Ljung-Box, vamos a validar la independencia de los residuos, para verificar si estan correlacionados o no.
+
+```{r}
+checkresiduals(modelo_hw_GSPC)
+```
+Este p-valor es menor que 0.05, aunque es más alto que el del modelo ARIMA. También indica evidencia de autocorrelación en los residuos del modelo Holt-Winters, lo que sugiere que este modelo tampoco está capturando completamente la estructura de los datos.
+
+De esta forma, podemos concluir que ambos modelos presentan autocorrelación en los residuos: Tanto el modelo ARIMA(0,0,1) como el modelo Holt-Winters tienen residuos que muestran evidencia de autocorrelación, lo que sugiere que ninguno de los dos modelos es completamente adecuado para los datos sin realizar ajustes adicionales.
+
+El suavizamiento de la variable tiempo, también conocido como suavizamiento de series temporales, implica aplicar técnicas para reducir la variabilidad y el ruido en los datos temporales, facilitando la identificación de tendencias y patrones subyacentes.
+
+## Suavizamiento Exponencial Simple (Simple Exponential Smoothing)
+
+El suavizamiento exponencial simple asigna más peso a las observaciones más recientes.
+
+```{r}
+if (!require(TTR)) {
+  install.packages("TTR")
+  library(TTR)
+}
+
+# Suavizamiento simple con una ventana de 3 periodos
+sma <- SMA(TS_GSPC, n = 3)
+
+# Graficar la serie original y la suavizada
+plot(TS_GSPC, main="Suavizamiento Simple", col="black")
+lines(sma, col="blue", lwd=2)
+```
+## Suavizamiento Exponencial Doble de Holt (Holt’s Linear Trend Method)
+
+Este método extiende el suavizamiento exponencial para considerar tanto el nivel como la tendencia.
+
+```{r}
+# Suavizamiento exponencial doble de Holt
+holt_model <- holt(TS_GSPC)
+
+# Graficar la serie original y la suavizada
+plot(TS_GSPC, main="Suavizamiento Exponencial Doble de Holt", col="black")
+lines(fitted(holt_model), col="red", lwd=2)
+```
+Se puede observar como el metodo de suavizamiento simple tiende a suavizar mas los datos de la serie temporal presentada que el metodo de suavizamiento exponencial doble Holt.
+
 # Resultados
 
 La base de datos desarrollada en este proyecto S&P500 es un indice ponderado por capitalización del mercado que incluye a las 500 empresas mas grandes de Estados Unidos. Para nuestro ejercicio se realizo la agrupación de la base de datos con una frecuencia mensual, esta fue posteriormente diferenciada para eliminar las tendencias y estabilizar la variabilidad en los datos a lo largo del tiempo. La cual resulto ser una serie de tiempo estacionaria, esto se determino al aplicarle la prueba de Dickey-Fuller Aumentada (ADF).

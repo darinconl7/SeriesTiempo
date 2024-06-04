@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Desarrollo del modelo Holt Winter | 02-desarrollo.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Desarrollo del modelo Holt Winter | 02-desarrollo.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Desarrollo del modelo Holt Winter | 02-desarrollo.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="desarrollo-del-modelo-arima.html"/>
+<link rel="next" href="resultados.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Series de Tiempo S&P500</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>2</b> Desarrollo del proyecto</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Conversión a Formato de Serie de Tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#imagen-serie-de-tiempo"><i class="fa fa-check"></i><b>2.2</b> Imagen Serie de Tiempo</a></li>
+<li class="chapter" data-level="2.3" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#graficas-de-la-decomposición-de-los-datos"><i class="fa fa-check"></i><b>2.3</b> Graficas de la Decomposición de los Datos</a></li>
+<li class="chapter" data-level="2.4" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#ciclo-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>2.4</b> Ciclo de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html"><i class="fa fa-check"></i><b>3</b> Modelo ARIMA(AutoRegressive Integrated Moving Average)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#determinación-de-estacionaridad"><i class="fa fa-check"></i><b>3.1</b> Determinación de Estacionaridad</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#prueba-de-dickey-fuller-aumentada-adf"><i class="fa fa-check"></i><b>3.1.1</b> Prueba de Dickey-Fuller Aumentada (ADF)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelo-arimaautoregressive-integrated-moving-average.html"><a href="modelo-arimaautoregressive-integrated-moving-average.html#diferenciación-de-la-serie"><i class="fa fa-check"></i><b>3.2</b> Diferenciación de la Serie</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html"><i class="fa fa-check"></i><b>4</b> Desarrollo del modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#ajuste-del-modelo"><i class="fa fa-check"></i><b>4.1</b> Ajuste del Modelo</a></li>
+<li class="chapter" data-level="4.2" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#diagnostico-de-modelo"><i class="fa fa-check"></i><b>4.2</b> Diagnostico de Modelo</a></li>
+<li class="chapter" data-level="4.3" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#predicciones-del-modelo"><i class="fa fa-check"></i><b>4.3</b> Predicciones del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html"><i class="fa fa-check"></i><b>5</b> Desarrollo del modelo Holt Winter</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#pronostico-del-modelo-holt-winter"><i class="fa fa-check"></i><b>5.1</b> Pronostico del Modelo Holt WInter</a></li>
+<li class="chapter" data-level="5.2" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#suavizamiento-exponencial-simple-simple-exponential-smoothing"><i class="fa fa-check"></i><b>5.2</b> Suavizamiento Exponencial Simple (Simple Exponential Smoothing)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>6</b> Resultados</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="desarrollo-del-modelo-holt-winter" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Desarrollo del modelo Holt Winter<a href="desarrollo-del-modelo-holt-winter.html#desarrollo-del-modelo-holt-winter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El modelo Holt-Winters es una técnica de suavizamiento exponencial utilizada para realizar pronósticos en series temporales. Este modelo es especialmente útil cuando se espera que los datos tengan patrones estacionales. El modelo Holt-Winters se divide en dos variantes principales: la aditiva y la multiplicativa, dependiendo de la naturaleza de la estacionalidad (constante o proporcional al nivel de la serie).</p>
+<p>Para ajustar el modelo a nuestros datos, podemos elegir entre la variante aditiva y la multiplicativa especificando los parámetros seasonal a la serie temporal obtenida anteriormente.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="desarrollo-del-modelo-holt-winter.html#cb29-1" tabindex="-1"></a>modelo_hw_GSPC <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(TS_GSPC, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span>
+<span id="cb29-2"><a href="desarrollo-del-modelo-holt-winter.html#cb29-2" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="desarrollo-del-modelo-holt-winter.html#cb29-3" tabindex="-1"></a><span class="co"># Ver el resumen del modelo Holt-Winters</span></span>
+<span id="cb29-4"><a href="desarrollo-del-modelo-holt-winter.html#cb29-4" tabindex="-1"></a><span class="fu">summary</span>(modelo_hw_GSPC)</span></code></pre></div>
+<pre><code>##              Length Class  Mode     
+## fitted       648    mts    numeric  
+## x            174    ts     numeric  
+## alpha          1    -none- numeric  
+## beta           1    -none- numeric  
+## gamma          1    -none- numeric  
+## coefficients  14    -none- numeric  
+## seasonal       1    -none- character
+## SSE            1    -none- numeric  
+## call           3    -none- call</code></pre>
+<p>A continuación, vamos a realizar el pronostico de nuestro modelo de Holt Winter para el mismo periodo de tiempo de 12 meses que utilizamos para el modelo ARIMA.</p>
+<div id="pronostico-del-modelo-holt-winter" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Pronostico del Modelo Holt WInter<a href="desarrollo-del-modelo-holt-winter.html#pronostico-del-modelo-holt-winter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="desarrollo-del-modelo-holt-winter.html#cb31-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(forecast)) {</span>
+<span id="cb31-2"><a href="desarrollo-del-modelo-holt-winter.html#cb31-2" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;forecast&quot;</span>)</span>
+<span id="cb31-3"><a href="desarrollo-del-modelo-holt-winter.html#cb31-3" tabindex="-1"></a>  <span class="fu">library</span>(forecast)</span>
+<span id="cb31-4"><a href="desarrollo-del-modelo-holt-winter.html#cb31-4" tabindex="-1"></a>}</span>
+<span id="cb31-5"><a href="desarrollo-del-modelo-holt-winter.html#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="desarrollo-del-modelo-holt-winter.html#cb31-6" tabindex="-1"></a><span class="co"># Realizamos el pronóstico</span></span>
+<span id="cb31-7"><a href="desarrollo-del-modelo-holt-winter.html#cb31-7" tabindex="-1"></a>pronostico <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modelo_hw_GSPC, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb31-8"><a href="desarrollo-del-modelo-holt-winter.html#cb31-8" tabindex="-1"></a><span class="fu">print</span>(pronostico)</span></code></pre></div>
+<pre><code>##          Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+## Jul 2024       5360.715 5188.250 5533.179 5096.953 5624.477
+## Aug 2024       5274.049 5051.808 5496.290 4934.161 5613.937
+## Sep 2024       5136.233 4873.088 5399.379 4733.787 5538.680
+## Oct 2024       5246.722 4947.876 5545.568 4789.676 5703.767
+## Nov 2024       5387.990 5056.958 5719.023 4881.720 5894.261
+## Dec 2024       5367.982 5007.334 5728.629 4816.418 5919.545
+## Jan 2025       5381.724 4993.441 5770.006 4787.897 5975.551
+## Feb 2025       5395.230 4980.896 5809.565 4761.560 6028.900
+## Mar 2025       5459.481 5020.394 5898.568 4787.956 6131.006
+## Apr 2025       5451.595 4988.847 5914.344 4743.882 6159.309
+## May 2025       5537.725 5052.243 6023.206 4795.245 6280.205
+## Jun 2025       5544.603 5037.192 6052.014 4768.585 6320.621</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="desarrollo-del-modelo-holt-winter.html#cb33-1" tabindex="-1"></a><span class="co"># Graficar los resultados</span></span>
+<span id="cb33-2"><a href="desarrollo-del-modelo-holt-winter.html#cb33-2" tabindex="-1"></a><span class="fu">plot</span>(pronostico)</span></code></pre></div>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+## Diagnostico del Modelo</p>
+<p>De igual forma que lo hicimos con el modelo ARIMA, con la prueba de Ljung-Box, vamos a validar la independencia de los residuos, para verificar si estan correlacionados o no.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="desarrollo-del-modelo-holt-winter.html#cb34-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(modelo_hw_GSPC)</span></code></pre></div>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from HoltWinters
+## Q* = 37.671, df = 24, p-value = 0.03746
+## 
+## Model df: 0.   Total lags used: 24</code></pre>
+<p>Este p-valor es menor que 0.05, aunque es más alto que el del modelo ARIMA. También indica evidencia de autocorrelación en los residuos del modelo Holt-Winters, lo que sugiere que este modelo tampoco está capturando completamente la estructura de los datos.</p>
+<p>De esta forma, podemos concluir que ambos modelos presentan autocorrelación en los residuos: Tanto el modelo ARIMA(0,0,1) como el modelo Holt-Winters tienen residuos que muestran evidencia de autocorrelación, lo que sugiere que ninguno de los dos modelos es completamente adecuado para los datos sin realizar ajustes adicionales.</p>
+<p>El suavizamiento de la variable tiempo, también conocido como suavizamiento de series temporales, implica aplicar técnicas para reducir la variabilidad y el ruido en los datos temporales, facilitando la identificación de tendencias y patrones subyacentes.</p>
+</div>
+<div id="suavizamiento-exponencial-simple-simple-exponential-smoothing" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Suavizamiento Exponencial Simple (Simple Exponential Smoothing)<a href="desarrollo-del-modelo-holt-winter.html#suavizamiento-exponencial-simple-simple-exponential-smoothing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El suavizamiento exponencial simple asigna más peso a las observaciones más recientes.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="desarrollo-del-modelo-holt-winter.html#cb36-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(TTR)) {</span>
+<span id="cb36-2"><a href="desarrollo-del-modelo-holt-winter.html#cb36-2" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;TTR&quot;</span>)</span>
+<span id="cb36-3"><a href="desarrollo-del-modelo-holt-winter.html#cb36-3" tabindex="-1"></a>  <span class="fu">library</span>(TTR)</span>
+<span id="cb36-4"><a href="desarrollo-del-modelo-holt-winter.html#cb36-4" tabindex="-1"></a>}</span>
+<span id="cb36-5"><a href="desarrollo-del-modelo-holt-winter.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="desarrollo-del-modelo-holt-winter.html#cb36-6" tabindex="-1"></a><span class="co"># Suavizamiento simple con una ventana de 3 periodos</span></span>
+<span id="cb36-7"><a href="desarrollo-del-modelo-holt-winter.html#cb36-7" tabindex="-1"></a>sma <span class="ot">&lt;-</span> <span class="fu">SMA</span>(TS_GSPC, <span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb36-8"><a href="desarrollo-del-modelo-holt-winter.html#cb36-8" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="desarrollo-del-modelo-holt-winter.html#cb36-9" tabindex="-1"></a><span class="co"># Graficar la serie original y la suavizada</span></span>
+<span id="cb36-10"><a href="desarrollo-del-modelo-holt-winter.html#cb36-10" tabindex="-1"></a><span class="fu">plot</span>(TS_GSPC, <span class="at">main=</span><span class="st">&quot;Suavizamiento Simple&quot;</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span>
+<span id="cb36-11"><a href="desarrollo-del-modelo-holt-winter.html#cb36-11" tabindex="-1"></a><span class="fu">lines</span>(sma, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+## Suavizamiento Exponencial Doble de Holt (Holt’s Linear Trend Method)</p>
+<p>Este método extiende el suavizamiento exponencial para considerar tanto el nivel como la tendencia.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="desarrollo-del-modelo-holt-winter.html#cb37-1" tabindex="-1"></a><span class="co"># Suavizamiento exponencial doble de Holt</span></span>
+<span id="cb37-2"><a href="desarrollo-del-modelo-holt-winter.html#cb37-2" tabindex="-1"></a>holt_model <span class="ot">&lt;-</span> <span class="fu">holt</span>(TS_GSPC)</span>
+<span id="cb37-3"><a href="desarrollo-del-modelo-holt-winter.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="desarrollo-del-modelo-holt-winter.html#cb37-4" tabindex="-1"></a><span class="co"># Graficar la serie original y la suavizada</span></span>
+<span id="cb37-5"><a href="desarrollo-del-modelo-holt-winter.html#cb37-5" tabindex="-1"></a><span class="fu">plot</span>(TS_GSPC, <span class="at">main=</span><span class="st">&quot;Suavizamiento Exponencial Doble de Holt&quot;</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span>
+<span id="cb37-6"><a href="desarrollo-del-modelo-holt-winter.html#cb37-6" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(holt_model), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+Se puede observar como el metodo de suavizamiento simple tiende a suavizar mas los datos de la serie temporal presentada que el metodo de suavizamiento exponencial doble Holt.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="desarrollo-del-modelo-arima.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="resultados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/%s",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/%s",
+"text": null
+},
+"download": null,
+"search": false,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
