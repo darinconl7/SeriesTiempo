@@ -4,33 +4,31 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 2 Desarrollo del proyecto | Series De Tiempo S&amp;P500</title>
-  <meta name="description" content="Capítulo 2 Desarrollo del proyecto | Series De Tiempo S&amp;P500" />
+  <title>Capítulo 2 Desarrollo del proyecto | 02-desarrollo.knit</title>
+  <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 2 Desarrollo del proyecto | Series De Tiempo S&amp;P500" />
+  <meta property="og:title" content="Capítulo 2 Desarrollo del proyecto | 02-desarrollo.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 2 Desarrollo del proyecto | Series De Tiempo S&amp;P500" />
+  <meta name="twitter:title" content="Capítulo 2 Desarrollo del proyecto | 02-desarrollo.knit" />
   
   
   
 
-<meta name="author" content="Daniel Alberto Rincón Loaiza" />
 
 
-<meta name="date" content="2024-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
+<link rel="prev" href="introducción.html"/>
 <link rel="next" href="modelo-arimaautoregressive-integrated-moving-average.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -56,7 +54,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -140,7 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Series de Tiempo S&P500</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
 <li class="chapter" data-level="2" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html"><i class="fa fa-check"></i><b>2</b> Desarrollo del proyecto</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="desarrollo-del-proyecto.html"><a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Conversión a Formato de Serie de Tiempo</a></li>
@@ -162,7 +160,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#diagnostico-de-modelo"><i class="fa fa-check"></i><b>4.2</b> Diagnostico de Modelo</a></li>
 <li class="chapter" data-level="4.3" data-path="desarrollo-del-modelo-arima.html"><a href="desarrollo-del-modelo-arima.html#predicciones-del-modelo"><i class="fa fa-check"></i><b>4.3</b> Predicciones del Modelo</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>5</b> Resultados</a></li>
+<li class="chapter" data-level="5" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html"><i class="fa fa-check"></i><b>5</b> Desarrollo del modelo Holt Winter</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#pronostico-del-modelo-holt-winter"><i class="fa fa-check"></i><b>5.1</b> Pronostico del Modelo Holt WInter</a></li>
+<li class="chapter" data-level="5.2" data-path="desarrollo-del-modelo-holt-winter.html"><a href="desarrollo-del-modelo-holt-winter.html#suavizamiento-exponencial-simple-simple-exponential-smoothing"><i class="fa fa-check"></i><b>5.2</b> Suavizamiento Exponencial Simple (Simple Exponential Smoothing)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>6</b> Resultados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -174,7 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series De Tiempo S&amp;P500</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -199,12 +202,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2010-01-11   1145.96   1149.74  1142.02    1146.98  4255780000       1146.98</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="desarrollo-del-proyecto.html#cb4-1" tabindex="-1"></a><span class="fu">tail</span>(GSPC)</span></code></pre></div>
 <pre><code>##            GSPC.Open GSPC.High GSPC.Low GSPC.Close GSPC.Volume GSPC.Adjusted
-## 2024-05-10   5225.49   5239.66  5209.68    5222.68  3617900000       5222.68
-## 2024-05-13   5233.08   5237.26  5211.16    5221.42  4255710000       5221.42
-## 2024-05-14   5221.10   5250.37  5217.98    5246.68  4763580000       5246.68
-## 2024-05-15   5263.26   5311.76  5263.26    5308.15  4360810000       5308.15
-## 2024-05-16   5310.07   5325.49  5296.19    5297.10  3817470000       5297.10
-## 2024-05-17   5303.10   5305.45  5283.59    5303.27  3578120000       5303.27</code></pre>
+## 2024-05-28   5315.91   5315.91  5280.89    5306.04  3751540000       5306.04
+## 2024-05-29   5278.73   5282.27  5262.70    5266.95  3552750000       5266.95
+## 2024-05-30   5259.77   5260.21  5222.10    5235.48  3818750000       5235.48
+## 2024-05-31   5243.21   5280.33  5191.68    5277.51  5437160000       5277.51
+## 2024-06-03   5297.15   5302.11  5234.32    5283.40  4046920000       5283.40
+## 2024-06-04   5278.24   5298.80  5257.63    5291.34  3707900000       5291.34</code></pre>
 <p>A continuación, realizaremos una conversión de datos a zoo (Z’s Ordered Observations) y ts (Time Series). Un objeto zoo es una serie temporal ordenada que consiste en un vector de datos con una marca de tiempo asociada a cada observación. Esto permite que las observaciones estén indexadas por fechas o por otro tipo de marca de tiempo, mientras un objeto ts es una serie temporal que representa un conjunto de observaciones regularmente espaciadas en el tiempo, como datos mensuales, trimestrales o anuales. Se caracteriza por tener un vector de datos y un vector de fechas o periodos de tiempo.</p>
 <div id="conversión-a-formato-de-serie-de-tiempo" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Conversión a Formato de Serie de Tiempo<a href="desarrollo-del-proyecto.html#conversión-a-formato-de-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -232,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="imagen-serie-de-tiempo" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Imagen Serie de Tiempo<a href="desarrollo-del-proyecto.html#imagen-serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="desarrollo-del-proyecto.html#cb10-1" tabindex="-1"></a><span class="fu">plot</span>(TS_GSPC)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 A continuación, realizaremos el proceso de descomposición estacional a la serie temporal utilizando la función decompose(), la cual separa la serie temporal en tres componentes: tendencia, estacionalidad y residuos. Almacenaremos el resultado de esta operación en el objeto GSCP_month_decomp.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="desarrollo-del-proyecto.html#cb11-1" tabindex="-1"></a><span class="co"># Descomposición de la data agrupada por mes</span></span>
 <span id="cb11-2"><a href="desarrollo-del-proyecto.html#cb11-2" tabindex="-1"></a><span class="fu">suppressWarnings</span>({</span>
@@ -249,14 +252,14 @@ A continuación, realizaremos el proceso de descomposición estacional a la seri
 <span id="cb12-6"><a href="desarrollo-del-proyecto.html#cb12-6" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>seasonal, <span class="at">main =</span> <span class="st">&quot;Estacionalidad&quot;</span>)</span>
 <span id="cb12-7"><a href="desarrollo-del-proyecto.html#cb12-7" tabindex="-1"></a></span>
 <span id="cb12-8"><a href="desarrollo-del-proyecto.html#cb12-8" tabindex="-1"></a><span class="fu">plot</span>(GSCP_month_decomp<span class="sc">$</span>random, <span class="at">main =</span> <span class="st">&quot;Residuos&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>En el grafico anterior podemos observar que la tendencia de los indices S&amp;P500 es de incrementalidad, con periodos de estacionalidad de cada 2 años aproximadente. Y un periodo muy remarcado de Residuos para la pandemia del covid del 2020.</p>
 </div>
 <div id="ciclo-de-las-series-de-tiempo" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> Ciclo de las series de tiempo<a href="desarrollo-del-proyecto.html#ciclo-de-las-series-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Cuando se realiza una descomposición de series temporales, los residuos son la parte de la serie temporal que no se puede explicar mediante la tendencia y la estacionalidad. Si hay ciclos en los datos, es probable que estos se reflejen en los residuos. Esto significa que los ciclos pueden manifestarse como patrones periódicos o fluctuaciones en los residuos después de que se hayan eliminado la tendencia y la estacionalidad. En este caso, podemos observar que los ciclos no tienen grnades variaciones en el tiempo.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="desarrollo-del-proyecto.html#cb13-1" tabindex="-1"></a><span class="fu">boxplot</span>(TS_GSPC<span class="sc">~</span><span class="fu">cycle</span>(TS_GSPC))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="02-desarrollo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 </div>
             </section>
@@ -264,7 +267,7 @@ A continuación, realizaremos el proceso de descomposición estacional a la seri
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducción.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="modelo-arimaautoregressive-integrated-moving-average.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -296,7 +299,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/02-desarrollo.Rmd",
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/%s",
 "text": "Edit"
 },
 "history": {
@@ -304,14 +307,11 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/02-desarrollo.Rmd",
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/%s",
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
+"search": false,
 "toc": {
 "collapse": "subsection"
 }
