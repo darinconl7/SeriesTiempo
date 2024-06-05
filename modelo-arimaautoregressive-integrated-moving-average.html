@@ -211,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Augmented Dickey-Fuller Test
 ## 
 ## data:  TS_GSPC
-## Dickey-Fuller = -2.0258, Lag order = 5, p-value = 0.5655
+## Dickey-Fuller = -2.0155, Lag order = 5, p-value = 0.5698
 ## alternative hypothesis: stationary</code></pre>
 <p>Dado que el valor p es 0.5887, que es mucho mayor que 0.05, no podemos rechazar la hipótesis nula. Esto significa que, según los resultados de esta prueba, no hay suficiente evidencia para concluir que la serie temporal TS_GSPC es estacionaria.</p>
 </div>
@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Augmented Dickey-Fuller Test
 ## 
 ## data:  diff_data_sp500
-## Dickey-Fuller = -5.7336, Lag order = 5, p-value = 0.01
+## Dickey-Fuller = -5.7258, Lag order = 5, p-value = 0.01
 ## alternative hypothesis: stationary</code></pre>
 <p>Dado que el valor p es 0.01, podemos rechazar la hipótesis nula. Esto significa que hay suficiente evidencia para concluir que la serie temporal con frecuencia mensual diferenciada diff_data_sp500 es estacionaria.</p>
 <p>La advertencia de que el p-value es menor al valor impreso indica que el verdadero p-value es muy pequeño, incluso menor a 0.01, lo cual refuerza aún más la conclusión de que la serie es estacionaria.</p>

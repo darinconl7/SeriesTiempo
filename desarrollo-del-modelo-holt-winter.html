@@ -215,18 +215,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-7"><a href="desarrollo-del-modelo-holt-winter.html#cb31-7" tabindex="-1"></a>pronostico <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modelo_hw_GSPC, <span class="at">h =</span> <span class="dv">12</span>)</span>
 <span id="cb31-8"><a href="desarrollo-del-modelo-holt-winter.html#cb31-8" tabindex="-1"></a><span class="fu">print</span>(pronostico)</span></code></pre></div>
 <pre><code>##          Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-## Jul 2024       5360.715 5188.250 5533.179 5096.953 5624.477
-## Aug 2024       5274.049 5051.808 5496.290 4934.161 5613.937
-## Sep 2024       5136.233 4873.088 5399.379 4733.787 5538.680
-## Oct 2024       5246.722 4947.876 5545.568 4789.676 5703.767
-## Nov 2024       5387.990 5056.958 5719.023 4881.720 5894.261
-## Dec 2024       5367.982 5007.334 5728.629 4816.418 5919.545
-## Jan 2025       5381.724 4993.441 5770.006 4787.897 5975.551
-## Feb 2025       5395.230 4980.896 5809.565 4761.560 6028.900
-## Mar 2025       5459.481 5020.394 5898.568 4787.956 6131.006
-## Apr 2025       5451.595 4988.847 5914.344 4743.882 6159.309
-## May 2025       5537.725 5052.243 6023.206 4795.245 6280.205
-## Jun 2025       5544.603 5037.192 6052.014 4768.585 6320.621</code></pre>
+## Jul 2024       5367.409 5194.939 5539.879 5103.639 5631.179
+## Aug 2024       5280.886 5058.626 5503.147 4940.968 5620.804
+## Sep 2024       5143.088 4879.905 5406.270 4740.585 5545.591
+## Oct 2024       5253.731 4954.827 5552.634 4796.598 5710.863
+## Nov 2024       5395.230 5064.119 5726.342 4888.839 5901.622
+## Dec 2024       5375.333 5014.582 5736.084 4823.612 5927.054
+## Jan 2025       5389.184 5000.772 5777.596 4795.159 5983.209
+## Feb 2025       5402.811 4988.318 5817.303 4768.899 6036.722
+## Mar 2025       5467.236 5027.961 5906.510 4795.423 6139.048
+## Apr 2025       5459.443 4996.475 5922.412 4751.394 6167.492
+## May 2025       5545.827 5060.092 6031.561 4802.960 6288.694
+## Jun 2025       5553.930 5046.231 6061.628 4777.472 6330.388</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="desarrollo-del-modelo-holt-winter.html#cb33-1" tabindex="-1"></a><span class="co"># Graficar los resultados</span></span>
 <span id="cb33-2"><a href="desarrollo-del-modelo-holt-winter.html#cb33-2" tabindex="-1"></a><span class="fu">plot</span>(pronostico)</span></code></pre></div>
 <p><img src="02-desarrollo_files/figure-html/unnamed-chunk-20-1.png" width="672" />
@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Ljung-Box test
 ## 
 ## data:  Residuals from HoltWinters
-## Q* = 37.671, df = 24, p-value = 0.03746
+## Q* = 37.665, df = 24, p-value = 0.03751
 ## 
 ## Model df: 0.   Total lags used: 24</code></pre>
 <p>Este p-valor es menor que 0.05, aunque es más alto que el del modelo ARIMA. También indica evidencia de autocorrelación en los residuos del modelo Holt-Winters, lo que sugiere que este modelo tampoco está capturando completamente la estructura de los datos.</p>

@@ -198,17 +198,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Coefficients:
 ##           ma1     mean
-##       -0.1816  24.3044
-## s.e.   0.0773   7.9228
+##       -0.1812  24.3422
+## s.e.   0.0773   7.9274
 ## 
-## sigma^2 = 16361:  log likelihood = -1083.77
-## AIC=2173.53   AICc=2173.68   BIC=2182.99
+## sigma^2 = 16363:  log likelihood = -1083.78
+## AIC=2173.55   AICc=2173.69   BIC=2183.01
 ## 
 ## Training set error measures:
-##                      ME     RMSE     MAE       MPE    MAPE      MASE
-## Training set 0.01522643 127.1683 88.4507 -167.2138 404.461 0.7055424
+##                      ME     RMSE      MAE       MPE    MAPE      MASE
+## Training set 0.01512469 127.1749 88.49216 -167.3665 403.875 0.7061509
 ##                     ACF1
-## Training set 0.007716584</code></pre>
+## Training set 0.007809237</code></pre>
 </div>
 <div id="diagnostico-de-modelo" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Diagnostico de Modelo<a href="desarrollo-del-modelo-arima.html#diagnostico-de-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Ljung-Box test
 ## 
 ## data:  Residuals from ARIMA(0,0,1) with non-zero mean
-## Q* = 45.823, df = 23, p-value = 0.003147
+## Q* = 45.964, df = 23, p-value = 0.003022
 ## 
 ## Model df: 1.   Total lags used: 24</code></pre>
 <p>Dado que el valor p es 0.004381, que es menor que 0.05, podemos rechazar la hipótesis nula. Esto significa que hay suficiente evidencia para concluir que los residuos del modelo ARIMA(0,0,1) no son independientes, es decir, hay autocorrelación significativa en los residuos.</p>
